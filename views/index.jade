@@ -1,0 +1,17 @@
+script(type='text/javascript', src='/stack.io/stack.io.js')
+script(type='text/javascript', src='/js/chat.js')
+h1= title
+form#login
+    p Name?
+    input#nick(type='text')
+    input#log(type='submit')
+div#calendar
+    h2 Calendar
+div#chat
+    h2 Chat
+    div#users(style="float:right;")
+    div#talk(style="height:300px; overflow:auto; border-right: 1px solid black; margin-right : 5px;")
+    form#frm
+        input#msg(type='text')
+        input#snd(type='submit')
+        input#disc(type='submit', value='Disconnect')

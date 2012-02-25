@@ -1,0 +1,7 @@
+{
+    "oauth" : {
+        "client_id" : "795504765909-ahgpb2bu8gdqm68tgldf0jugsfp8l007.apps.googleusercontent.com",
+        "client_secret" : "LjgucA-eewhE4g6-lTXdply9",
+        "redirect_uri" : "http://meetup-organizer.dotcloud.com/oauth2callback"
+    }
+}
