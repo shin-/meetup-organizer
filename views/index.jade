@@ -1,4 +1,4 @@
-script(type='text/javascript', src='/stack.io/stack.io.js')
+script(type='text/javascript', src='/js/datamodel.js')
 script(type='text/javascript', src='/js/chat.js')
 h1= title
 form#login
@@ -11,6 +11,9 @@ div#chat
     h2 Chat
     div#users(style="float:right;")
     div#talk(style="height:300px; overflow:auto; border-right: 1px solid black; margin-right : 5px;")
+        script(type="text/x-handlebars")
+            <ul>{{#each Org.messages}} <li><span style='font-weight:bold'>{{author}}</span>: {{msg}}</li>{{/each}}
+            </ul>
     form#frm
         input#msg(type='text')
         input#snd(type='submit')

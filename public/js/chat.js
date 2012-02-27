@@ -1,5 +1,4 @@
 var io = stackio();
-var key;
 var nick;
 $(window).ready(function() {
     $('#chat').hide();
@@ -11,16 +10,15 @@ $(window).ready(function() {
         $('#' + nick).remove();
     });
 
-    io.on('new_msg', function(nick, msg) {
-        $('#talk').append('<li><span style="font-weight:bold;">' + nick + '</span>: ' + msg + '</li>');
+    io.on('new_msg', function(msg) {
+        if (msg.author != nick)
+            Org.store.load(Org.Message, msg.id, msg);
     });
 
     $('#frm').submit(function(e) {
-        e.preventDefault();
-        io.call('ChatService', 'send')(nick, key, $('#msg').val(), function(err, data) {
-            if (err) console.log(err);
-            $('#msg').val('');
-        });
+        Org.store.createRecord(Org.Message, { msg : $('#msg').val(), author : nick });
+        $('#msg').val('');
+        Org.store.commit();
         return false;
     });
 
@@ -29,9 +27,9 @@ $(window).ready(function() {
         nick = $('#nick').val();
         io.call('ChatService', 'connect')(nick, function(data) {
             if (data.err) {
-                console.log(err);
+                console.log(data.err);
             } else {
-                key = data.key;
+                Org.key = data.key;
                 for (var i = 0, l = data.users.length; i < l; i++) {
                     var nick = data.users[i];
                     $('#users').append('<li id="' + nick + '">' + nick + '</li>');
@@ -42,9 +40,9 @@ $(window).ready(function() {
         });
         return false;
     });
-    
+
     $('#disc').click(function() {
-        io.call('ChatService', 'disc')(nick, key, function(err) {
+        io.call('ChatService', 'disc')(nick, Org.key, function(err) {
             if (err) console.log(err);
             else {
                 $('#chat').hide();
